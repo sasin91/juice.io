@@ -1,3 +1,4 @@
+{% set route = app.request.attributes.get('_route') %}
 <!DOCTYPE html>
 <html lang="en" class="h-full bg-gray-100">
 <head>
@@ -20,17 +21,23 @@
             <div class="flex h-16 justify-between">
                 <div class="flex">
                     <div class="flex flex-shrink-0 items-center">
+                        <!-- Smaller logo, eg. only the icon -->
                         <img class="block h-8 w-auto lg:hidden"
-                             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
+                             src="https://uploads-ssl.webflow.com/61dc0b9bd31a0a313627f378/6262907f05d3997bb7f3b652_juice-beta-logo.svg"
+                             alt="Juice IO">
+
+                        <!-- Default logo -->
                         <img class="hidden h-8 w-auto lg:block"
-                             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
+                             src="https://uploads-ssl.webflow.com/61dc0b9bd31a0a313627f378/6262907f05d3997bb7f3b652_juice-beta-logo.svg"
+                             alt="Juice IO">
                     </div>
                     <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
                         <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" -->
-                        <a href="#"
-                           class="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-                           aria-current="page">Dashboard</a>
-
+                        {% for link in menu.links %}
+                            <a href="{{ path(link.href) }}"
+                               class="{{ route is same as(link.href) ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+                               aria-current="page">{{ link.label }}</a>
+                        {% endfor %}
                         <a href="#"
                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">Team</a>
 

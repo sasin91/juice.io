@@ -17,7 +17,10 @@ class MenuService
     {
         return [
             [
-                'label' => $this->translator->trans('menu.welcome'),
+                'label' => $this->translator->trans(
+                    id: 'menu.welcome',
+                    domain: 'services'
+                ),
                 'href' => 'welcome'
             ]
         ];

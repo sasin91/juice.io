@@ -13,15 +13,30 @@ class MenuService
 
     }
 
+    private function trans(string $id): string
+    {
+        return $this->translator->trans(
+            id: "menu.$id",
+            domain: 'services'
+        );
+    }
+
     public function links()
     {
         return [
             [
                 'label' => $this->translator->trans(
-                    id: 'menu.welcome',
+                    id: "menu.welcome",
                     domain: 'services'
                 ),
                 'href' => 'welcome'
+            ],
+            [
+                'label' => $this->translator->trans(
+                    id: "menu.about",
+                    domain: 'services'
+                ),
+                'href' => 'about'
             ]
         ];
     }

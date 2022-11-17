@@ -26,7 +26,12 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    #[Route('/register', name: 'app_register')]
+    #[Route(
+        path: [
+            'en' => '/register',
+            'da' => '/opret'
+        ], name: 'app_register'
+    )]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $user = new User();
@@ -63,7 +68,13 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/verify/email', name: 'app_verify_email')]
+    #[Route(
+        path: [
+            'en' => '/verify/email',
+            'da' => '/bekræft/email'
+        ],
+        name: 'app_verify_email'
+    )]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator, UserRepository $userRepository): Response
     {
         $id = $request->get('id');

@@ -1,3 +1,6 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+    prefix:
+        en: '' # don't prefix URLs for English, the default locale
+        da: '/da'

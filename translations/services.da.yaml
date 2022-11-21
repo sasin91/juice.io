@@ -1,3 +1,5 @@
 menu:
   welcome: 'Velkommen'
   about: 'Om os'
+  login: 'Log ind'
+  register: 'Opret dig'

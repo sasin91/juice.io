@@ -1,3 +1,5 @@
 menu:
   welcome: 'Welcome'
   about: 'services'
+  login: 'Sign in'
+  register: 'Sign up'

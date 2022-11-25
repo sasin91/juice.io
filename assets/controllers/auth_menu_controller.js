@@ -6,9 +6,9 @@ import {Controller} from '@hotwired/stimulus';
 */
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
-    static targets = ['desktopMenu', 'mobileMenu']
+    static targets = ['menu']
 
-    toggleDesktopMenu() {
-        this.desktopMenuTarget.hidden = !this.desktopMenuTarget.hidden
+    toggleMenu() {
+        this.menuTarget.hidden = !this.menuTarget.hidden
     }
 }

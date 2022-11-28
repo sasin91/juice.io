@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use App\Security\EmailVerifier;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,16 +15,35 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
-class RegistrationController extends AbstractController
+class SecurityController extends AbstractController
 {
-    private EmailVerifier $emailVerifier;
-
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(private EmailVerifier $emailVerifier)
     {
-        $this->emailVerifier = $emailVerifier;
+    }
+
+    #[Route(
+        path: [
+            'en' => '/login',
+            'da' => '/log-ind'
+        ],
+        name: 'app_login'
+    )]
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error,
+        ]);
     }
 
     #[Route(
@@ -56,14 +76,14 @@ class RegistrationController extends AbstractController
                     ->from(new Address('noreply@juice.io', 'Juice'))
                     ->to($user->getEmail())
                     ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+                    ->htmlTemplate('security/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('welcome');
+            return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('security/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
@@ -102,5 +122,16 @@ class RegistrationController extends AbstractController
         $this->addFlash('success', 'Your email address has been verified.');
 
         return $this->redirectToRoute('app_register');
+    }
+
+    #[Route(path: [
+        'en' => '/logout',
+        'da' => '/log-ud'
+    ], name: 'app_logout', methods: ['GET', 'POST'])]
+    public function logout()
+    {
+        // @see https://symfony.com/doc/current/security.html#logging-out
+        // controller can be blank: it will never be called!
+        throw new Exception('Don\'t forget to activate logout in security.yaml');
     }
 }

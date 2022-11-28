@@ -92,14 +92,26 @@
                                     data-transition-leave-to="transform opacity-0 scale-95"
                             >
                                 <!-- Active: "bg-gray-100", Not Active: "" -->
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                   id="user-menu-item-0">Your Profile</a>
+                                {% if feature('profile') %}
+                                <a href="{{ path('app_profile') }}" class="{{ route is same as(path('app_profile')) ? 'bg-gray-100' : '' }} block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                                   id="user-menu-item-0">{{ t('Your Profile') }}</a>
+                                {% endif %}
 
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                   id="user-menu-item-1">Settings</a>
+                                {#
+                                {% if feature('settings') %}
+                                    <a href="{{ path('app_settings') }}" class="{{ route is same as(path('app_settings')) ? 'bg-gray-100' : '' }} block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                                       id="user-menu-item-1">{{ t('Settings') }}</a>
+                                {% endif %}
+                                #}
+                                <!-- Logout form -->
+                                <form method="POST" action="{{ path('app_logout') }}">
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                                <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
-                                   id="user-menu-item-2">Sign out</a>
+                                    <a href="{{ path('app_logout') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                                       id="user-menu-item-2"
+                                       onclick="event.preventDefault(); this.closest('form').submit();"
+                                    >{{ t('Sign out') }}</a>
+                                </form>
                             </div>
                         </div>
                     {% else %}

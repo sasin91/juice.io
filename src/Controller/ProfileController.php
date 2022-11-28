@@ -10,12 +10,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfileController extends AbstractController
 {
     #[Route(
-        path: [
-            'en' => '/profile',
-            'da' => '/profil'
-        ],
+        path: '/{_locale<%app.supported_locales%>}/profile',
         name: 'app_profile',
-        methods: ['OPTIONS','GET']
+        methods: ['OPTIONS','GET'],
     )]
     public function index(): Response
     {

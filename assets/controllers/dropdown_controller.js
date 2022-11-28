@@ -7,13 +7,13 @@ import { useTransition } from 'stimulus-use';
 */
 /* stimulusFetch: 'lazy' */
 export default class extends Controller {
-    static targets = ['menu']
+    static targets = ['content']
 
     connect() {
-        this.menuTarget.hidden = true
+        this.contentTarget.hidden = true
 
         useTransition(this, {
-            element: this.menuTarget,
+            element: this.contentTarget,
             enterActive: 'fade-enter-active',
             enterFrom: 'fade-enter-from',
             enterTo: 'fade-enter-to',
@@ -21,12 +21,11 @@ export default class extends Controller {
             leaveFrom: 'fade-leave-from',
             leaveTo: 'fade-leave-to',
             hiddenClass: 'hidden',
-            transitioned: !this.menuTarget.hidden,
         });
     }
 
-    toggleMenu() {
-        this.menuTarget.hidden = !this.menuTarget.hidden
+    toggle() {
+        this.contentTarget.hidden = !this.contentTarget.hidden
         this.toggleTransition();
     }
 }

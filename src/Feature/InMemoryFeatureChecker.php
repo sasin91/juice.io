@@ -2,8 +2,6 @@
 
 namespace App\Feature;
 
-use function in_array;
-
 class InMemoryFeatureChecker implements FeatureChecker
 {
     public function __construct(public readonly array $enabled = [])
@@ -13,6 +11,6 @@ class InMemoryFeatureChecker implements FeatureChecker
 
     public function isEnabled(string $feature): bool
     {
-        return in_array($feature, $this->enabled);
+        return $this->enabled[$feature] ?? false;
     }
 }
